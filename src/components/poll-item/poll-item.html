@@ -1,0 +1,64 @@
+<!--
+  Generated template for the PollItem component.
+
+  See https://angular.io/docs/ts/latest/api/core/ComponentMetadata-class.html
+  for more info on Angular 2 Components.
+-->
+<ion-card>
+  <ion-item>
+    <ion-avatar item-left>
+      <img src="img/marty-avatar.png">
+    </ion-avatar>
+    <h2>{{ poll.author }}</h2>
+    <p>{{ poll.question }}</p>
+
+  </ion-item>
+
+  <ion-card-content>
+    <form role="form" ng-submit="vote()">
+      <table class="result-table">
+        <tr *ngFor=" let choice of poll.choices">
+          <td>
+            <label>
+              <input *ngIf="!userVoted" type="radio" name="choice" [(ngModel)]="poll.userVote" value="{{ choice._id }}">
+              <span *ngIf="poll.type ==='picture'"><img width="100px" height="100px"  [src]="'http://localhost:3000/' + choice.text"></span>
+              <span>{{ choice.text}}</span>
+            </label>
+          </td>
+          <td>
+            <table [style.background]="'lightblue'" style="width: {{ choice.votes.length/poll.totalVotes * 100 }}%; text-align: right">
+              <tr>
+                <td *ngIf="poll.totalVotes > 0"> {{ choice.votes.length }} {{choice.votes.length/poll.totalVotes * 100}}%
+                </td>
+              </tr>
+              <tr><td *ngIf="poll.totalVotes <= 0">0%</td></tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <button *ngIf="!userVoted" class="btn btn-primary pull-right" (click)="vote()" type="submit">Vote &raquo;</button>
+    </form>
+    <p>November 5, 1955</p>
+  </ion-card-content>
+
+  <ion-row>
+    <ion-col>
+      <button primary clear small>
+        <ion-icon name="thumbs-up"></ion-icon>
+        <span>12 Likes</span>
+      </button>
+    </ion-col>
+    <ion-col>
+      <button primary clear small>
+        <ion-icon name="text"></ion-icon>
+        <span>4 Comments</span>
+      </button>
+
+    </ion-col>
+    <ion-col center text-center>
+      <ion-note>
+        11h ago
+      </ion-note>
+    </ion-col>
+  </ion-row>
+</ion-card>

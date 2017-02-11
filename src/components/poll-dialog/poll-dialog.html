@@ -1,0 +1,38 @@
+<ion-header id="poll-dialog">
+    <ion-toolbar>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">
+                <span color="primary" showWhen="ios">Cancel</span>
+                <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <form [formGroup]="pollForm">
+                <ion-textarea  placeholder="what'd you like to ask?"  formControlName="question"></ion-textarea>
+                            <ion-icon name="camera" item-left></ion-icon>
+                            <ion-icon name="map" item-right></ion-icon>
+                            <ion-icon name="video" item-right></ion-icon>
+        <!--<div formArrayName="options" *ngFor="let option of pollForm.controls.options.controls; let i = index">-->
+        <div formArrayName="options" *ngFor="let option of pollForm.controls.options.controls; let i = index">
+            <div [formGroupName]="i">
+                    <poll-options [options]="pollForm.controls.options.controls[i]" [index]="i"></poll-options>
+                    <ion-icon  end name="close" (click)="removeOption(i)"></ion-icon>
+            </div>
+        </div>
+    </form>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+            <button start  left ion-button  color="primary" (click)="addOption()">
+                <ion-icon name="add"></ion-icon>
+            </button>
+            <form (submit)="saveTb()">
+                <button end right  ion-button icon-right color="primary" type="submit" [disabled]="!pollForm.valid">
+                     Ask
+                    <ion-icon name="send" large></ion-icon>
+                </button>
+            </form>
+    </ion-toolbar>
+</ion-footer>
